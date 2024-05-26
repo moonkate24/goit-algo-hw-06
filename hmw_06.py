@@ -34,14 +34,18 @@ class Record:
     def remove_phone(self, phone):
         self.phones = [p for p in self.phones if p.value != phone]
 
-    def edit_phone(self, old_phone, new_phone):
+   def edit_phone(self, old_phone, new_phone):
         for i, phone in enumerate(self.phones):
             if phone.value == old_phone:
                 self.phones[i] = Phone(new_phone)
-                break
+                return
+        raise ValueError(f"Old phone number {old_phone} not found.")
 
     def find_phone(self, phone):
-        return any(p.value == phone for p in self.phones)
+        for p in self.phones:
+            if p.value == phone:
+                return p
+        return None
 
     def __str__(self):
         phones = ', '.join(str(phone) for phone in self.phones)
